@@ -2,7 +2,10 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Activation
 from tensorflow.keras.utils import plot_model
 import numpy as np
-import tensorflow as tf
+
+# 适配intel cpu
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 if __name__ == '__main__':
     model = Sequential([
@@ -21,7 +24,6 @@ if __name__ == '__main__':
 
     print(training_data)
 
-
     model.fit(training_data, np.array(labels), epochs=20, batch_size=32)
 
     test_num = 100
@@ -36,4 +38,4 @@ if __name__ == '__main__':
         if (pred != expected[i]):
             error += 1
 
-    print(f'total erros:{error}, acc:{1.0-error/test_num}')
+    print(f'total erros:{error}, acc:{1.0 - error / test_num}')
