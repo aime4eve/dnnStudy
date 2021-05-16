@@ -1,24 +1,36 @@
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation
-from tensorflow.keras.utils import plot_model
-import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+from tensorflow.keras.layers import Dense, Activation
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.utils import plot_model
 
 matplotlib.use('TkAgg')
 
-
 # 适配intel cpu
 import os
+
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 if __name__ == '__main__':
-    model = Sequential([
-        Dense(4, input_shape=(2,)),
-        Activation('sigmoid'),
-        Dense(1),
-        Activation('sigmoid')
-    ])
+    # model = Sequential([
+    #     Dense(4, input_shape=(2,)),
+    #     Activation('sigmoid'),
+    #     Dense(1),
+    #     Activation('sigmoid')
+    # ])
+
+    model = Sequential()
+    #input layer
+    model.add(Dense(4,input_shape=(2,)))
+    model.add(Activation('sigmoid'))
+    #hidden layer
+    # model.add(Dense(2))
+    # model.add(Activation('sigmoid'))
+    #output layer
+    model.add(Dense(1))
+    model.add(Activation('sigmoid'))
+
 
     plot_model(model, to_file='training_model.png', show_shapes=True)
     model.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
@@ -47,9 +59,9 @@ if __name__ == '__main__':
                 error += 1
         acc = 1.0 - error / test_num
 
-        epoch_x.append(20*nn)
+        epoch_x.append(20 * nn)
         acc_y.append(acc)
-        plt.plot(20*nn, acc, 'r.-')
+        plt.plot(20 * nn, acc, 'r.-')
         plt.pause(0.1)
 
         print(f'total erros:{error}, acc:{acc}')
@@ -58,7 +70,6 @@ if __name__ == '__main__':
     print(epoch_x)
     print(acc_y)
 
-    plt.plot(epoch_x,acc_y,'go-')
+    plt.plot(epoch_x, acc_y, 'go-')
 
     plt.pause(5)
-
